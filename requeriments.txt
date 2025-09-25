@@ -1,0 +1,10 @@
+# Manejo de MIDI y generación de notas
+pretty_midi==0.2.10
+mido==1.3.2
+
+# Procesamiento de audio (lectura/escritura WAV, QC)
+soundfile==0.12.1
+numpy==1.26.4
+
+# Tablas y CSV para index.csv
+pandas==2.2.2
