@@ -57,8 +57,8 @@ def peak_dbfs(wav_path):
     peak = np.max(np.abs(x)) + 1e-12
     return 20*np.log10(peak)
 
-def trim_silence(wav_path, silence_threshold=0.003, tail_silence=0.2):
-    """Recorta el silencio del final del audio, dejando solo un poco de cola"""
+def trim_silence(wav_path, base_threshold=0.0005, midi_note=60):
+    """Recorta el silencio del final del audio, con threshold adaptativo según la nota - SIN SILENCIO EXTRA"""
     try:
         data, sr = sf.read(str(wav_path))
         
@@ -68,11 +68,31 @@ def trim_silence(wav_path, silence_threshold=0.003, tail_silence=0.2):
         else:
             audio_mono = data
         
+        # Threshold adaptativo según la altura de la nota
+        if midi_note < 48:  # Notas graves (A0 a B2)
+            silence_threshold = base_threshold * 15  # 0.0075
+            tail_silence = 0.1  # Mínima cola para graves
+        elif midi_note < 72:  # Notas medias (C3 a B4)  
+            silence_threshold = base_threshold * 8   # 0.004
+            tail_silence = 0.15  # Cola corta
+        elif midi_note < 84:  # Notas medio-agudas (C5 a B5)
+            silence_threshold = base_threshold * 4   # 0.002
+            tail_silence = 0.2 # Cola media
+        elif midi_note < 96:  # Notas agudas medias (C6 a B6)
+            silence_threshold = base_threshold * 2   # 0.001 (más sensible)
+            tail_silence = 0.12  # COLA MUY CORTA
+        elif midi_note < 100:  # Notas muy agudas (C7 a G7)
+            silence_threshold = base_threshold * 0.8  # 0.0004 (súper sensible)
+            tail_silence = 0.08  # COLA CORTA
+        else:  # Notas extremas (G#7 a C8) - EXTREMADAMENTE AGRESIVO
+            silence_threshold = base_threshold * 0.4  # 0.0002 (extremo)
+            tail_silence = 0.05  # COLA MÍNIMA - Solo 50ms
+        
         # Encontrar el último punto con sonido significativo
         significant_samples = np.where(np.abs(audio_mono) > silence_threshold)[0]
         
         if len(significant_samples) > 0:
-            # Último punto con sonido + un poco de silencio de cola
+            # Último punto con sonido + cola mínima de silencio
             last_sound_sample = significant_samples[-1]
             tail_samples = int(tail_silence * sr)
             end_sample = min(last_sound_sample + tail_samples, len(data))
@@ -162,8 +182,8 @@ def main():
                         # Normalizar el audio para asegurar buen volumen
                         normalize_audio(wav_path)
                         
-                        # Recortar silencio del final
-                        trim_silence(wav_path)
+                        # Recortar silencio del final con threshold adaptativo
+                        trim_silence(wav_path, midi_note=midi_note)
 
                         pk = peak_dbfs(wav_path)
 
