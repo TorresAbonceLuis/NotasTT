@@ -57,7 +57,7 @@ def peak_dbfs(wav_path):
     peak = np.max(np.abs(x)) + 1e-12
     return 20*np.log10(peak)
 
-def trim_silence(wav_path, silence_threshold=0.001, tail_silence=0.2):
+def trim_silence(wav_path, silence_threshold=0.003, tail_silence=0.2):
     """Recorta el silencio del final del audio, dejando solo un poco de cola"""
     try:
         data, sr = sf.read(str(wav_path))
@@ -130,7 +130,6 @@ def main():
     total_files = (MIDI_MAX - MIDI_MIN + 1) * len(VELOCITIES) * len(ARTICULATIONS) * len(PEDALS) * len(TAKES)
     print(f"Generando {total_files} archivos de audio del piano completo...")
     print(f"Rango: {midi_to_name(MIDI_MIN)} a {midi_to_name(MIDI_MAX)} ({MIDI_MAX - MIDI_MIN + 1} notas)")
-    print("Esto puede tomar un tiempo considerable...")
     
     current_file = 0
     start_time = time.time()
@@ -184,27 +183,11 @@ def main():
                             "soundfont": os.path.basename(SOUNDFONT),
                         })
 
-    # Guardar metadatos y mostrar resumen final
     df = pd.DataFrame(rows)
     df.to_csv(META_CSV, index=False)
-    
-    elapsed_total = time.time() - start_time
-    print(f"\n🎉 ¡Completado!")
-    print(f"📁 {len(rows)} archivos generados en: {OUT_ROOT}")
-    print(f"📊 Metadatos guardados en: {META_CSV}")
-    print(f"⏱️  Tiempo total: {elapsed_total/60:.1f} minutos")
-    print(f"⚡ Velocidad promedio: {len(rows)/elapsed_total:.1f} archivos/segundo")
-    
-    # Estadísticas por articulación
-    print(f"\n📈 Resumen por articulación:")
     for art_name in ARTICULATIONS.keys():
         count = len(df[df['articulation'] == art_name])
         print(f"  - {art_name}: {count} archivos")
-    
-    print(f"\n🎵 ¡Todos los archivos están listos y optimizados!")
-    print(f"   - Volumen normalizado ✓")
-    print(f"   - Silencio final recortado ✓")
-    print(f"   - Audio perfectamente audible ✓")
 
 if __name__ == "__main__":
     main()
