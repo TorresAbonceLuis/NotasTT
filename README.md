@@ -24,6 +24,9 @@ Cada archivo está optimizado con:
 # macOS - Instalar FluidSynth
 brew install fluidsynth
 
+#windows
+choco install fluidsynth
+
 # Instalar librerías Python
 pip install -r requeriments.txt
 ```
