@@ -5,6 +5,7 @@ metadata
 splits
 split_audio
 .DS_Store
-models
 data
 split_audio
+Piano_1
+models/rf.pkl
