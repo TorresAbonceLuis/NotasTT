@@ -2,5 +2,3 @@ venv
 piano.sf2
 .DS_Store
 *.pkl
-phase1/data
-phase1/splits
