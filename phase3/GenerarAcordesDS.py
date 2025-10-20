@@ -8,9 +8,9 @@ import soundfile as sf
 from scipy import signal
 
 # CONFIGURACIÓN PARA ACORDES DE 3 NOTAS
-SOUNDFONT = "piano.sf2"
-OUT_ROOT = Path("data/piano_chords_3notes")
-META_CSV = Path("metadata/chords_3notes_index.csv")
+SOUNDFONT = "../piano.sf2"
+OUT_ROOT = Path("data/piano")
+META_CSV = Path("metadata/index.csv")
 
 FS = 44100
 BITS = 16
