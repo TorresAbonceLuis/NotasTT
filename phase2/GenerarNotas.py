@@ -5,7 +5,7 @@ import pandas as pd
 import pretty_midi
 import soundfile as sf
 
-# CONFIGURACIÓN FASE 1 - DATASET ROBUSTO
+# CONFIGURACIÓN FASE 2 - DATASET ROBUSTO
 SOUNDFONT = "piano.sf2"
 OUT_ROOT = Path("data/piano")
 META_CSV = Path("metadata/index.csv")
@@ -166,7 +166,7 @@ def main():
     rows = []
     
     total_files = (MIDI_MAX - MIDI_MIN + 1) * len(VELOCITIES) * len(ARTICULATIONS) * len(PEDALS) * len(TAKES)
-    print("🚀 FASE 1: GENERANDO DATASET ROBUSTO PARA NOTAS INDIVIDUALES")
+    print("🚀 FASE 2: GENERANDO DATASET ROBUSTO PARA NOTAS INDIVIDUALES")
     print("=" * 60)
     print(f"🎯 Objetivo: {total_files} archivos")
     print(f"📊 Rango: {midi_to_name(MIDI_MIN)} a {midi_to_name(MIDI_MAX)} ({MIDI_MAX - MIDI_MIN + 1} notas)")
@@ -267,7 +267,7 @@ def main():
     df.to_csv(META_CSV, index=False)
     
     # Reporte final
-    print(f"\n🎉 FASE 1 COMPLETADA")
+    print(f"\n🎉 FASE 2 COMPLETADA")
     print("=" * 40)
     print(f"✅ Archivos exitosos: {len(df)}/{total_files}")
     print(f"❌ Archivos fallidos: {len(failed_files)}")
