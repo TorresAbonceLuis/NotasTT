@@ -1,0 +1,35 @@
+{
+  "best_by_valid": "RandomForest",
+  "best_by_cv": "LinearSVC",
+  "best_by_f1": "RandomForest",
+  "valid_acc": 0.9997865528281751,
+  "test_acc": 0.9998262380538662,
+  "test_f1": 0.9998263295266362,
+  "cv_score": 0.9701173959445036,
+  "all_results": {
+    "LinearSVC": {
+      "valid_acc": 0.9962113127001068,
+      "test_acc": 0.9963509991311903,
+      "test_f1": 0.9963513308371459,
+      "cv_score": 0.9918356456776948
+    },
+    "LogisticRegression": {
+      "valid_acc": 0.996264674493063,
+      "test_acc": 0.9963944396177237,
+      "test_f1": 0.9963952052207731,
+      "cv_score": 0.98991462113127
+    },
+    "kNN(k=5)": {
+      "valid_acc": 0.9996264674493063,
+      "test_acc": 0.999609035621199,
+      "test_f1": 0.9996090619054312,
+      "cv_score": 0.9171824973319105
+    },
+    "RandomForest": {
+      "valid_acc": 0.9997865528281751,
+      "test_acc": 0.9998262380538662,
+      "test_f1": 0.9998263295266362,
+      "cv_score": 0.9701173959445036
+    }
+  }
+}
