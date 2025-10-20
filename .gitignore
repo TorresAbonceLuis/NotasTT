@@ -1,18 +1,6 @@
 venv
 piano.sf2
-data
-metadata
-splits
-split_audio
 .DS_Store
-data
-split_audio
-Piano_1
-models/rf.pkl
-phase2/piano
-# Archivos de modelos pesados
-models_improved/rf.pkl
-phase1/models_improved/rf.pkl
-phase2/models/rf.pkl
-phase3/models/rf.pkl
+*.mid
+*.wav
 *.pkl
